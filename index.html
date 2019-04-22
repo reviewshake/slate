@@ -242,6 +242,17 @@
               </ul>
           </li>
           <li>
+            <a href="#responses" class="toc-h1 toc-link" data-title="Responses">Responses</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#add-review-response" class="toc-h2 toc-link" data-title="Add review response">Add review response</a>
+                  </li>
+                  <li>
+                    <a href="#get-info-2" class="toc-h2 toc-link" data-title="Get info">Get info</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
             <a href="#errors" class="toc-h1 toc-link" data-title="Errors">Errors</a>
           </li>
       </ul>
@@ -757,6 +768,290 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 <tr>
 <td>meta_data</td>
 <td>Any available meta data for this review (when available)</td>
+</tr>
+</tbody></table>
+<h1 id='responses'>Responses</h1><h2 id='add-review-response'>Add review response</h2>
+<p>Use our API to respond to reviews for sites which don&#39;t have an API. Currently available for Yelp and Tripadvisor.</p>
+<pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/responds/add"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"spiderman-token"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1234567890'</span>
+<span class="n">request</span><span class="p">.</span><span class="nf">body</span> <span class="o">=</span> <span class="s2">"{</span><span class="se">\"</span><span class="s2">username</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">password</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">profile_url</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">review_id</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">text</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">callback</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">https://app.reviewcompany.com/supervisor_callback</span><span class="se">\"</span><span class="s2">, </span><span class="se">\"</span><span class="s2">external_identifier</span><span class="se">\"</span><span class="s2">: </span><span class="se">\"</span><span class="s2">xxx</span><span class="se">\"</span><span class="s2">}"</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://supervisor.reviewshake.com/api/v2/responds/add"</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">"{</span><span class="se">\"</span><span class="s">username</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">password</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">profile_url</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">review_id</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">text</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">callback</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">https://app.reviewcompany.com/supervisor_callback</span><span class="se">\"</span><span class="s">, </span><span class="se">\"</span><span class="s">external_identifier</span><span class="se">\"</span><span class="s">: </span><span class="se">\"</span><span class="s">xxx</span><span class="se">\"</span><span class="s">}"</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'spiderman-token'</span><span class="p">:</span> <span class="s">"1234567890"</span>
+    <span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl --request POST --url https://supervisor.reviewshake.com/api/v2/responds/add --header <span class="s1">'spiderman-token: 1234567890'</span> --data <span class="s1">'{ "username": "xxx", "password": "xxx", "profile_url": "xxx", "review_id": "xxx", "text": "xxx", "callback": "https://app.reviewcompany.com/supervisor_callback", "external_identifier": "xxx" }'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"async"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"crossDomain"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"https://supervisor.reviewshake.com/api/v2/responds/add"</span><span class="p">,</span>
+  <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"POST"</span><span class="p">,</span>
+  <span class="s2">"headers"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"spiderman-token"</span><span class="p">:</span> <span class="s2">"1234567890"</span>
+  <span class="p">},</span>
+  <span class="s2">"processData"</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span>
+  <span class="s2">"data"</span><span class="p">:</span> <span class="s2">"{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\" }"</span>
+<span class="p">}</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">settings</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"job_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12312313</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Added response to the queue..."</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>If we don&#39;t support the review site you are submitting, you will see:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"We do not support www.deliveroo.com yet, please submit it to our feedback forum (https://feedback.reviewshake.com)"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+<p><code>POST https://supervisor.reviewshake.com/api/v2/responds/add</code></p>
+<h3 id='request-body'>Request Body</h3>
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>username</td>
+<td>The username for logging into the review site in question</td>
+</tr>
+<tr>
+<td>password</td>
+<td>The password for logging into the review site in question</td>
+</tr>
+<tr>
+<td>profile_url</td>
+<td>The URL for the review profile</td>
+</tr>
+<tr>
+<td>review_id</td>
+<td>The unique ID of the review to be responded to, as provided by the review site</td>
+</tr>
+<tr>
+<td>text</td>
+<td>The text of the response</td>
+</tr>
+<tr>
+<td>callback</td>
+<td>The URL you would like to receive a status POST</td>
+</tr>
+<tr>
+<td>external_identifier</td>
+<td>An identifier for this response in your system, will be included in callback payload</td>
+</tr>
+</tbody></table>
+
+<aside class="info">
+Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this response.
+</aside>
+<h3 id='response-4'>Response</h3>
+<p>The response contains the following keys:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>success</td>
+<td><code>true</code> or <code>false</code> depending on outcome</td>
+</tr>
+<tr>
+<td>job_id</td>
+<td>The <code>job_id</code> assigned to the scrape</td>
+</tr>
+<tr>
+<td>status</td>
+<td>HTTP code for status, eg. <code>200</code></td>
+</tr>
+<tr>
+<td>message</td>
+<td>Text response</td>
+</tr>
+</tbody></table>
+<h2 id='get-info-2'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"spiderman-token"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1234567890'</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://supervisor.reviewshake.com/api/v2/responds/info"</span>
+
+<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s">"job_id"</span><span class="p">:</span><span class="s">"12312313"</span><span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="s">""</span>
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'spiderman-token'</span><span class="p">:</span> <span class="s">"1234567890"</span>
+    <span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313'</span> --header <span class="s1">'spiderman-token: 1234567890'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"async"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"crossDomain"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313"</span><span class="p">,</span>
+  <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+  <span class="s2">"headers"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"spiderman-token"</span><span class="p">:</span> <span class="s2">"1234567890"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">settings</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"respond"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">12312313</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"username"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxx"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"profile_url"</span><span class="p">:</span><span class="w"> </span><span class="s2">"https://www.yelp.com/biz/naturally-delicious-brooklyn"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"review_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxx"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"xxx"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"pending"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"external_identifier"</span><span class="p">:</span><span class="w"> </span><span class="mi">8394</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>You will receive the following message if the provided <code>job_id</code> does not exist:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This job ID doesn't exist, please create it"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves information for a given response <code>job_id</code>.</p>
+<h3 id='http-request-5'>HTTP Request</h3>
+<p><code>GET https://supervisor.reviewshake.com/api/v2/responds/info?job_id=123123132</code></p>
+<h3 id='url-parameters-3'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>job_id</td>
+<td>The ID of the job to retrieve</td>
+</tr>
+</tbody></table>
+<h3 id='response-5'>Response</h3>
+<p>The response contains the following keys:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>success</td>
+<td><code>true</code> or <code>false</code> depending on outcome</td>
+</tr>
+<tr>
+<td>status</td>
+<td>HTTP code for status, eg. <code>200</code></td>
+</tr>
+<tr>
+<td>id</td>
+<td>The ID of the response from the Supervisor database (auto-increments)</td>
+</tr>
+<tr>
+<td>username</td>
+<td>The username for logging into the review site in question</td>
+</tr>
+<tr>
+<td>profile_url</td>
+<td>The URL for the review profile</td>
+</tr>
+<tr>
+<td>review_id</td>
+<td>The unique ID of the review to be responded to, as provided by the review site</td>
+</tr>
+<tr>
+<td>text</td>
+<td>The text of the response</td>
+</tr>
+<tr>
+<td>status</td>
+<td><code>pending</code>, <code>complete</code>, <code>maintenance</code> or <code>invalid_credentials</code> (see below for explanation)</td>
+</tr>
+<tr>
+<td>external_identifier</td>
+<td>An identifier for this response in your system, will be included in callback payload</td>
+</tr>
+</tbody></table>
+<h3 id='crawl_status-values-2'><code>crawl_status</code> values</h3>
+<p>The <code>crawl_status</code> returned can be one of the following:</p>
+
+<table><thead>
+<tr>
+<th><code>crawl_status</code></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>pending</code></td>
+<td>The job is still in the queue and is pending completion</td>
+</tr>
+<tr>
+<td><code>complete</code></td>
+<td>The job is complete</td>
+</tr>
+<tr>
+<td><code>maintenance</code></td>
+<td>There has been an issue with the response - our team is automatically notified for investigation</td>
+</tr>
+<tr>
+<td><code>invalid_credentials</code></td>
+<td>The credentials you have provided are invalid</td>
 </tr>
 </tbody></table>
 <h1 id='errors'>Errors</h1>
