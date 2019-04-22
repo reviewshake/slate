@@ -50,6 +50,549 @@ We expect for the API key to be included in all requests to the server in a head
 You must replace <code>1234567890</code> with your personal API key.
 </aside>
 
+# Brand audit
+
+## Add company
+
+Add a company that you wish to receive a brand audit for.
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/brand_audit/add?company_name=Brooklyn%20Burgers%20& Beer=&phone_number=%28718%29%20788-1458&postcode=11215&%20Beer=")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Post.new(url)
+request["spiderman-token"] = '1234567890'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/brand_audit/add"
+
+querystring = {"company_name":"Brooklyn%20Burgers%20"," Beer":"","phone_number":"%28718%29%20788-1458","postcode":"11215","%20Beer":""}
+
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("POST", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```shell
+curl --request POST --url 'https://supervisor.reviewshake.com/api/v2/brand_audit/add?company_name=Brooklyn%20Burgers%20& Beer=&phone_number=%28718%29%20788-1458&postcode=11215&%20Beer=' --header 'spiderman-token: 1234567890'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/brand_audit/add?company_name=Brooklyn%20Burgers%20& Beer=&phone_number=%28718%29%20788-1458&postcode=11215&%20Beer=",
+  "method": "POST",
+  "headers": {
+    "spiderman-token": "1234567890"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "success": true,
+    "job_id": 92724,
+    "status": 200,
+    "message": "Added brand audit to the queue..."
+}
+```
+
+### HTTP Request
+
+`POST https://supervisor.reviewshake.com/api/v2/brand_audit/add`
+
+### Request Body
+
+Key | Description
+--------- | -----------
+company_name | The name of the company you would like the brand audit for
+phone_number | The phone number of the company you would like the brand audit for
+postcode | The postcode of the company you would like the brand audit for
+
+<aside class="info">
+Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this brand audit.
+</aside>
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+job_id | The `job_id` assigned to the scrape
+status | HTTP code for status, eg. `200`
+message | Text response
+
+## Get info
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/brand_audit/info?job_id=92724")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["spiderman-token"] = '1234567890'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/brand_audit/info"
+
+querystring = {"job_id":"92724"}
+
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```shell
+curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/brand_audit/info?job_id=92724' --header 'spiderman-token: 1234567890'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/brand_audit/info?job_id=92724",
+  "method": "GET",
+  "headers": {
+    "spiderman-token": "1234567890"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+xxx
+```
+
+> You will receive the following message if the provided `job_id` does not exist:
+
+```json
+{
+    "success": false,
+    "status": 400,
+    "message": "This job ID doesn't exist, please create it"
+}
+```
+
+This endpoint retrieves information for a given response `job_id`.
+
+### HTTP Request
+
+`GET https://supervisor.reviewshake.com/api/v2/brand_audit/info?job_id=92724`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+job_id | The ID of the job to retrieve
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+status | HTTP code for status, eg. `200`
+
+### `status` values
+
+The `status` returned can be one of the following:
+
+`crawl_status` | Description
+--------- | -----------
+`pending` | The job is still in the queue and is pending completion
+`complete` | The job is complete
+`maintenance` | There has been an issue with the brand audit - our team is automatically notified for investigation
+`invalid_company` | The company you provided is invalid
+
+# Insights
+
+## Get insights
+
+Use our API to receive machine learning/natural language processing insights built for reviews.
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["spiderman-token"] = '1234567890'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/insights/add"
+
+querystring = {"review_text":"I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.","model":"806aqfniiq"}
+
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```shell
+curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq' --header 'spiderman-token: 1234567890'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq",
+  "method": "GET",
+  "headers": {
+    "spiderman-token": "1234567890"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "sentences": [
+        {
+            "sentence": "I love the speed of Slack.",
+            "sentiment": "positive",
+            "category": "speed"
+        },
+        {
+            "firstName": "Once you've booted it up, it seems to fly.",
+            "sentiment": "positive",
+            "category": "speed"
+        },
+        {
+            "firstName": "It doesn't matter how many rooms you're in or how many messages it has to recover.",
+            "sentiment": "neutral",
+            "category": ""
+        },
+        {
+            "firstName": "It's a breez",
+            "sentiment": "neutral",
+            "category": "ease-of-use"
+        }
+    ]
+}
+```
+
+> If the model you are attempting to use doesn't exist or is unavailable, you will see:
+
+```json
+{
+    "success": false,
+    "status": 400,
+    "message": "The model you are requesting doesn't exist or is unavailable"
+}
+```
+
+### HTTP Request
+
+`POST https://supervisor.reviewshake.com/api/v2/insights`
+
+### Request Body
+
+Key | Description
+--------- | -----------
+review_text | The review text you would like insights for
+model | The unique identifier of the model you would like to use
+
+We have general models available for several industries, such as e-commerce, airlines, hotels, cars and restaurants. Contact us to train models for your specific industry or use case.
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+job_id | The `job_id` assigned to the scrape
+status | HTTP code for status, eg. `200`
+message | Text response
+
+# Responses
+
+## Add review response
+
+Use our API to respond to reviews for sites which don't have an API. Currently available for Yelp and Tripadvisor.
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/responds/add")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Post.new(url)
+request["spiderman-token"] = '1234567890'
+request.body = "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\"}"
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/responds/add"
+
+payload = "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\"}"
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("POST", url, data=payload, headers=headers)
+
+print(response.text)
+```
+
+```shell
+curl --request POST --url https://supervisor.reviewshake.com/api/v2/responds/add --header 'spiderman-token: 1234567890' --data '{ "username": "xxx", "password": "xxx", "profile_url": "xxx", "review_id": "xxx", "text": "xxx", "callback": "https://app.reviewcompany.com/supervisor_callback", "external_identifier": "xxx" }'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/responds/add",
+  "method": "POST",
+  "headers": {
+    "spiderman-token": "1234567890"
+  },
+  "processData": false,
+  "data": "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\" }"
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "success": true,
+    "job_id": 12312313,
+    "status": 200,
+    "message": "Added response to the queue..."
+}
+```
+
+> If we don't support the review site you are submitting, you will see:
+
+```json
+{
+    "success": false,
+    "status": 400,
+    "message": "We do not support www.deliveroo.com yet, please submit it to our feedback forum (https://feedback.reviewshake.com)"
+}
+```
+
+### HTTP Request
+
+`POST https://supervisor.reviewshake.com/api/v2/responds/add`
+
+### Request Body
+
+Key | Description
+--------- | -----------
+username | The username for logging into the review site in question
+password | The password for logging into the review site in question
+profile_url | The URL for the review profile
+review_id | The unique ID of the review to be responded to, as provided by the review site
+text | The text of the response
+callback | The URL you would like to receive a status POST
+external_identifier | An identifier for this response in your system, will be included in callback payload
+
+<aside class="info">
+Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this response.
+</aside>
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+job_id | The `job_id` assigned to the scrape
+status | HTTP code for status, eg. `200`
+message | Text response
+
+## Get info
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Get.new(url)
+request["spiderman-token"] = '1234567890'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/responds/info"
+
+querystring = {"job_id":"12312313"}
+
+payload = ""
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("GET", url, data=payload, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```shell
+curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313' --header 'spiderman-token: 1234567890'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313",
+  "method": "GET",
+  "headers": {
+    "spiderman-token": "1234567890"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "success": true,
+    "status": 200,
+    "respond": {
+        "id": 12312313,
+        "username": "xxx",
+        "profile_url": "https://www.yelp.com/biz/naturally-delicious-brooklyn",
+        "review_id": "xxx",
+        "text": "xxx",
+        "status": "pending",
+        "external_identifier": 8394
+    }
+}
+```
+
+> You will receive the following message if the provided `job_id` does not exist:
+
+```json
+{
+    "success": false,
+    "status": 400,
+    "message": "This job ID doesn't exist, please create it"
+}
+```
+
+This endpoint retrieves information for a given response `job_id`.
+
+### HTTP Request
+
+`GET https://supervisor.reviewshake.com/api/v2/responds/info?job_id=123123132`
+
+### URL Parameters
+
+Parameter | Description
+--------- | -----------
+job_id | The ID of the job to retrieve
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+status | HTTP code for status, eg. `200`
+id | The ID of the response from the Supervisor database (auto-increments)
+username | The username for logging into the review site in question
+profile_url | The URL for the review profile
+review_id | The unique ID of the review to be responded to, as provided by the review site
+text | The text of the response
+status | `pending`, `complete`, `maintenance` or `invalid_credentials` (see below for explanation)
+external_identifier | An identifier for this response in your system, will be included in callback payload
+
+### `status` values
+
+The `status` returned can be one of the following:
+
+`crawl_status` | Description
+--------- | -----------
+`pending` | The job is still in the queue and is pending completion
+`complete` | The job is complete
+`maintenance` | There has been an issue with the response - our team is automatically notified for investigation
+`invalid_credentials` | The credentials you have provided are invalid
+
 # Reviews
 
 ## Add review profile
@@ -415,23 +958,27 @@ reviewer_title | Title of the reviewer
 unique_id | Unique ID of the review as reported by the review site (when available)
 meta_data | Any available meta data for this review (when available)
 
-# Responses
+# URLs
 
-## Add review response
+## Add URL
 
-Use our API to respond to reviews for sites which don't have an API. Currently available for Yelp and Tripadvisor.
+Add a URL to receive meta data from. Supported sites:
+
+- Generic sites (eg. `http://www.naturallydelicious.com`)
+- Yelp (eg. `https://yelp.com/biz/naturally-delicious-brooklyn`)
+- Facebook (eg. `https://www.facebook.com/naturallydelicious/`)
+- Google (eg. `https://www.google.com/search?q=naturally+delicious+caterers+nyc`)
 
 ```ruby
 require 'uri'
 require 'net/http'
 
-url = URI("https://supervisor.reviewshake.com/api/v2/responds/add")
+url = URI("https://supervisor.reviewshake.com/api/v2/url/add?url=https://www.facebook.com/pg/AnnapolisPropertyServices/reviews/")
 
 http = Net::HTTP.new(url.host, url.port)
 
 request = Net::HTTP::Post.new(url)
 request["spiderman-token"] = '1234567890'
-request.body = "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\"}"
 
 response = http.request(request)
 puts response.read_body
@@ -440,33 +987,34 @@ puts response.read_body
 ```python
 import requests
 
-url = "https://supervisor.reviewshake.com/api/v2/responds/add"
+url = "https://supervisor.reviewshake.com/api/v2/url/add"
 
-payload = "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\"}"
+querystring = {"url":"https://www.facebook.com/pg/AnnapolisPropertyServices/reviews/"}
+
 headers = {
-    'spiderman-token': "1234567890"
+    'spiderman-token': "1234567890",
+    'cache-control': "no-cache",
+    'Postman-Token': "10f9a175-dbcd-44f1-9717-668fab7b0eee"
     }
 
-response = requests.request("POST", url, data=payload, headers=headers)
+response = requests.request("POST", url, headers=headers, params=querystring)
 
 print(response.text)
 ```
 
 ```shell
-curl --request POST --url https://supervisor.reviewshake.com/api/v2/responds/add --header 'spiderman-token: 1234567890' --data '{ "username": "xxx", "password": "xxx", "profile_url": "xxx", "review_id": "xxx", "text": "xxx", "callback": "https://app.reviewcompany.com/supervisor_callback", "external_identifier": "xxx" }'
+curl --request POST --url 'https://supervisor.reviewshake.com/api/v2/url/add?url=https://www.facebook.com/pg/AnnapolisPropertyServices/reviews/' --header 'spiderman-token: 1234567890'
 ```
 
 ```javascript
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://supervisor.reviewshake.com/api/v2/responds/add",
+  "url": "https://supervisor.reviewshake.com/api/v2/url/add?url=https://www.facebook.com/pg/AnnapolisPropertyServices/reviews/",
   "method": "POST",
   "headers": {
     "spiderman-token": "1234567890"
-  },
-  "processData": false,
-  "data": "{\"username\": \"xxx\", \"password\": \"xxx\", \"profile_url\": \"xxx\", \"review_id\": \"xxx\", \"text\": \"xxx\", \"callback\": \"https://app.reviewcompany.com/supervisor_callback\", \"external_identifier\": \"xxx\" }"
+  }
 }
 
 $.ajax(settings).done(function (response) {
@@ -481,11 +1029,11 @@ $.ajax(settings).done(function (response) {
     "success": true,
     "job_id": 12312313,
     "status": 200,
-    "message": "Added response to the queue..."
+    "message": "Added this URL to the queue..."
 }
 ```
 
-> If we don't support the review site you are submitting, you will see:
+> If we don't support the URL you are submitting, you will see:
 
 ```json
 {
@@ -497,19 +1045,13 @@ $.ajax(settings).done(function (response) {
 
 ### HTTP Request
 
-`POST https://supervisor.reviewshake.com/api/v2/responds/add`
+`POST https://supervisor.reviewshake.com/api/v2/url/add`
 
 ### Request Body
 
 Key | Description
 --------- | -----------
-username | The username for logging into the review site in question
-password | The password for logging into the review site in question
-profile_url | The URL for the review profile
-review_id | The unique ID of the review to be responded to, as provided by the review site
-text | The text of the response
-callback | The URL you would like to receive a status POST
-external_identifier | An identifier for this response in your system, will be included in callback payload
+url | The URL you would like meta data for
 
 <aside class="info">
 Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this response.
@@ -531,7 +1073,7 @@ message | Text response
 require 'uri'
 require 'net/http'
 
-url = URI("https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313")
+url = URI("https://supervisor.reviewshake.com/api/v2/url/info?job_id=12312313")
 
 http = Net::HTTP.new(url.host, url.port)
 
@@ -545,7 +1087,7 @@ puts response.read_body
 ```python
 import requests
 
-url = "https://supervisor.reviewshake.com/api/v2/responds/info"
+url = "https://supervisor.reviewshake.com/api/v2/url/info"
 
 querystring = {"job_id":"12312313"}
 
@@ -560,14 +1102,14 @@ print(response.text)
 ```
 
 ```shell
-curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313' --header 'spiderman-token: 1234567890'
+curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/url/info?job_id=12312313' --header 'spiderman-token: 1234567890'
 ```
 
 ```javascript
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313",
+  "url": "https://supervisor.reviewshake.com/api/v2/url/info?job_id=12312313",
   "method": "GET",
   "headers": {
     "spiderman-token": "1234567890"
@@ -585,15 +1127,21 @@ $.ajax(settings).done(function (response) {
 {
     "success": true,
     "status": 200,
-    "respond": {
-        "id": 12312313,
-        "username": "xxx",
-        "profile_url": "https://www.yelp.com/biz/naturally-delicious-brooklyn",
-        "review_id": "xxx",
-        "text": "xxx",
-        "status": "pending",
-        "external_identifier": 8394
-    }
+    "social_data": {
+        "facebook": "https://www.facebook.com/ChicagoStyleSEO",
+        "google": "https://plus.google.com/+Chicagostyleseo/about",
+        "twitter": "https://twitter.com/chicagostyleseo",
+        "instagram": "https://instagram.com/chicagostyleseo/",
+        "linkedin": "https://www.linkedin.com/company/chicago-style-seo"
+    },
+    "contact_data": {
+        "phone": "+17738095002",
+        "email": "info@chicagostyleseo.com"
+    },
+    "review_data": {},
+    "website": null,
+    "last_crawl": "2018-10-03",
+    "crawl_status": "complete"
 }
 ```
 
@@ -611,7 +1159,7 @@ This endpoint retrieves information for a given response `job_id`.
 
 ### HTTP Request
 
-`GET https://supervisor.reviewshake.com/api/v2/responds/info?job_id=123123132`
+`GET https://supervisor.reviewshake.com/api/v2/url/info?job_id=92724`
 
 ### URL Parameters
 
@@ -626,13 +1174,9 @@ Key | Description
 --------- | -----------
 success | `true` or `false` depending on outcome
 status | HTTP code for status, eg. `200`
-id | The ID of the response from the Supervisor database (auto-increments)
-username | The username for logging into the review site in question
-profile_url | The URL for the review profile
-review_id | The unique ID of the review to be responded to, as provided by the review site
-text | The text of the response
-status | `pending`, `complete`, `maintenance` or `invalid_credentials` (see below for explanation)
-external_identifier | An identifier for this response in your system, will be included in callback payload
+social_data | Hash containing links to the social profiles found on the URL
+contact_data | Hash containing contact data found on the URL
+review_data | Hash containing links to reviw sites found on the URL
 
 ### `status` values
 
@@ -642,5 +1186,5 @@ The `status` returned can be one of the following:
 --------- | -----------
 `pending` | The job is still in the queue and is pending completion
 `complete` | The job is complete
-`maintenance` | There has been an issue with the response - our team is automatically notified for investigation
-`invalid_credentials` | The credentials you have provided are invalid
+`maintenance` | There has been an issue with the scrape - our team is automatically notified for investigation
+`invalid_url` | The URL you provided is invalid
