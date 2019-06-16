@@ -688,6 +688,8 @@ query | Google search query that shows the Google My Business listing in the sea
 from_date | Only scrape reviews from a specific date (optional). Only works for `url` parameter. Format is `yyyy-mm-dd`
 blocks | Number of blocks you want to return from search results (optional). In blocks of 10.
 diff | Previous job ID for your given profile, for which you only need latest reviews.
+callback | The URL where you would like us to `POST` the result payload when the status is complete
+external_identifier | An identifier for this response in your system, will be included in callback payload
 
 <aside class="info">
 Remember to take note of the <code>job_id</code>, as you will need this to GET reviews for this profile.
