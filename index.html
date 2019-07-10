@@ -242,7 +242,10 @@
             <a href="#insights" class="toc-h1 toc-link" data-title="Insights">Insights</a>
               <ul class="toc-list-h2">
                   <li>
-                    <a href="#get-insights" class="toc-h2 toc-link" data-title="Get insights">Get insights</a>
+                    <a href="#add-insight" class="toc-h2 toc-link" data-title="Add insight">Add insight</a>
+                  </li>
+                  <li>
+                    <a href="#get-info-2" class="toc-h2 toc-link" data-title="Get info">Get info</a>
                   </li>
               </ul>
           </li>
@@ -253,7 +256,7 @@
                     <a href="#add-review-response" class="toc-h2 toc-link" data-title="Add review response">Add review response</a>
                   </li>
                   <li>
-                    <a href="#get-info-2" class="toc-h2 toc-link" data-title="Get info">Get info</a>
+                    <a href="#get-info-3" class="toc-h2 toc-link" data-title="Get info">Get info</a>
                   </li>
               </ul>
           </li>
@@ -264,7 +267,7 @@
                     <a href="#add-review-profile" class="toc-h2 toc-link" data-title="Add review profile">Add review profile</a>
                   </li>
                   <li>
-                    <a href="#get-info-3" class="toc-h2 toc-link" data-title="Get info">Get info</a>
+                    <a href="#get-info-4" class="toc-h2 toc-link" data-title="Get info">Get info</a>
                   </li>
                   <li>
                     <a href="#get-reviews" class="toc-h2 toc-link" data-title="Get reviews">Get reviews</a>
@@ -278,7 +281,7 @@
                     <a href="#add-url" class="toc-h2 toc-link" data-title="Add URL">Add URL</a>
                   </li>
                   <li>
-                    <a href="#get-info-4" class="toc-h2 toc-link" data-title="Get info">Get info</a>
+                    <a href="#get-info-5" class="toc-h2 toc-link" data-title="Get info">Get info</a>
                   </li>
               </ul>
           </li>
@@ -303,8 +306,6 @@
 <li>URL Scraper API</li>
 <li>Brand Audit API</li>
 </ul>
-
-<p>This API documentation is <a href="https://github.com/reviewshake/slate">open-source</a> so feel free to make changes and submit a pull request if you would like.</p>
 <h1 id='authentication'>Authentication</h1>
 <blockquote>
 <p>To authorize, you will need to use your <code>spiderman-token</code> with every request.</p>
@@ -542,16 +543,16 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>The company you provided is invalid</td>
 </tr>
 </tbody></table>
-<h1 id='insights'>Insights</h1><h2 id='get-insights'>Get insights</h2>
+<h1 id='insights'>Insights</h1><h2 id='add-insight'>Add insight</h2>
 <p>Use our API to receive machine learning/natural language processing insights built for reviews.</p>
 <pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
-<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&amp;model=806aqfniiq"</span><span class="p">)</span>
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&amp;model=restaurants"</span><span class="p">)</span>
 
 <span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
 
-<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Post</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
 <span class="n">request</span><span class="p">[</span><span class="s2">"spiderman-token"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1234567890'</span>
 
 <span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
@@ -560,21 +561,21 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 
 <span class="n">url</span> <span class="o">=</span> <span class="s">"https://supervisor.reviewshake.com/api/v2/insights/add"</span>
 
-<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s">"review_text"</span><span class="p">:</span><span class="s">"I</span><span class="si">%20</span><span class="s">love</span><span class="si">%20</span><span class="s">the</span><span class="si">%20</span><span class="s">speed</span><span class="si">%20</span><span class="s">of</span><span class="si">%20</span><span class="s">Slack.</span><span class="si">%20</span><span class="s">Once</span><span class="si">%20</span><span class="s">you</span><span class="si">%27</span><span class="s">ve</span><span class="si">%20</span><span class="s">booted</span><span class="si">%20</span><span class="s">it</span><span class="si">%20</span><span class="s">up,</span><span class="si">%20</span><span class="s">it</span><span class="si">%20</span><span class="s">seems</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">fly.</span><span class="si">%20</span><span class="s">It</span><span class="si">%20</span><span class="s">doesn</span><span class="si">%27</span><span class="s">t</span><span class="si">%20</span><span class="s">matter</span><span class="si">%20</span><span class="s">how</span><span class="si">%20</span><span class="s">many</span><span class="si">%20</span><span class="s">rooms</span><span class="si">%20</span><span class="s">you</span><span class="si">%27</span><span class="s">re</span><span class="si">%20</span><span class="s">in</span><span class="si">%20</span><span class="s">or</span><span class="si">%20</span><span class="s">how</span><span class="si">%20</span><span class="s">many</span><span class="si">%20</span><span class="s">messages</span><span class="si">%20</span><span class="s">it</span><span class="si">%20</span><span class="s">has</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">recover.</span><span class="si">%20</span><span class="s">It</span><span class="si">%27</span><span class="s">s</span><span class="si">%20</span><span class="s">a</span><span class="si">%20</span><span class="s">breeze</span><span class="si">%20</span><span class="s">and</span><span class="si">%20</span><span class="s">a</span><span class="si">%20</span><span class="s">pleasure</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">go</span><span class="si">%20</span><span class="s">through</span><span class="si">%20</span><span class="s">it</span><span class="si">%20</span><span class="s">day</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">day."</span><span class="p">,</span><span class="s">"model"</span><span class="p">:</span><span class="s">"806aqfniiq"</span><span class="p">}</span>
+<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s">"review_text"</span><span class="p">:</span><span class="s">"Artichoke</span><span class="si">%20</span><span class="s">Basille</span><span class="si">%27</span><span class="s">s</span><span class="si">%20</span><span class="s">is</span><span class="si">%20</span><span class="s">the</span><span class="si">%20</span><span class="s">perfect</span><span class="si">%20</span><span class="s">spot</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">go</span><span class="si">%20</span><span class="s">if</span><span class="si">%20</span><span class="s">you</span><span class="si">%27</span><span class="s">re</span><span class="si">%20</span><span class="s">looking</span><span class="si">%20</span><span class="s">for</span><span class="si">%20</span><span class="s">some</span><span class="si">%20</span><span class="s">late</span><span class="si">%20</span><span class="s">night</span><span class="si">%20</span><span class="s">eats.</span><span class="si">%20</span><span class="s">I</span><span class="si">%20</span><span class="s">came</span><span class="si">%20</span><span class="s">here</span><span class="si">%20</span><span class="s">after</span><span class="si">%20</span><span class="s">my</span><span class="si">%20</span><span class="s">graduation</span><span class="si">%20</span><span class="s">ceremony</span><span class="si">%20</span><span class="s">because</span><span class="si">%20</span><span class="s">I</span><span class="si">%20</span><span class="s">was</span><span class="si">%20</span><span class="s">craving</span><span class="si">%20</span><span class="s">a</span><span class="si">%20</span><span class="s">decent</span><span class="si">%20</span><span class="s">slice</span><span class="si">%20</span><span class="s">and</span><span class="si">%20</span><span class="s">dollar</span><span class="si">%20</span><span class="s">pizza</span><span class="si">%20</span><span class="s">wasn</span><span class="si">%27</span><span class="s">t</span><span class="si">%20</span><span class="s">going</span><span class="si">%20</span><span class="s">to</span><span class="si">%20</span><span class="s">cut</span><span class="si">%20</span><span class="s">it</span><span class="si">%21%20</span><span class="s">I</span><span class="si">%20</span><span class="s">ordered</span><span class="si">%20</span><span class="s">the</span><span class="si">%20</span><span class="s">pepperoni</span><span class="si">%20</span><span class="s">and</span><span class="si">%20</span><span class="s">margharita</span><span class="si">%20</span><span class="s">Sicilian.</span><span class="si">%20</span><span class="s">The</span><span class="si">%20</span><span class="s">price</span><span class="si">%20</span><span class="s">for</span><span class="si">%20</span><span class="s">a</span><span class="si">%20</span><span class="s">slice</span><span class="si">%20</span><span class="s">averages</span><span class="si">%20</span><span class="s">from</span><span class="si">%20</span><span class="s">$5-6.50.</span><span class="si">%20</span><span class="s">This</span><span class="si">%20</span><span class="s">may</span><span class="si">%20</span><span class="s">seem</span><span class="si">%20</span><span class="s">pricey</span><span class="si">%20</span><span class="s">but</span><span class="si">%20</span><span class="s">you</span><span class="si">%20</span><span class="s">can</span><span class="si">%20</span><span class="s">taste</span><span class="si">%20</span><span class="s">the</span><span class="si">%20</span><span class="s">quality,</span><span class="si">%20</span><span class="s">also</span><span class="si">%20</span><span class="s">these</span><span class="si">%20</span><span class="s">slices</span><span class="si">%20</span><span class="s">are</span><span class="si">%20</span><span class="s">not</span><span class="si">%20</span><span class="s">your</span><span class="si">%20</span><span class="s">average</span><span class="si">%20</span><span class="s">size...</span><span class="si">%20</span><span class="s">they</span><span class="si">%27</span><span class="s">re</span><span class="si">%20</span><span class="s">HUGE."</span><span class="p">,</span><span class="s">"model"</span><span class="p">:</span><span class="s">"restaurants"</span><span class="p">}</span>
 
 <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">'spiderman-token'</span><span class="p">:</span> <span class="s">"1234567890"</span>
     <span class="p">}</span>
 
-<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"POST"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
 
 <span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
-</code></pre><pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&amp;model=806aqfniiq'</span> --header <span class="s1">'spiderman-token: 1234567890'</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl --request POST --url <span class="s1">'https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&amp;model=restaurants'</span> --header <span class="s1">'spiderman-token: 1234567890'</span>
 </code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{</span>
   <span class="s2">"async"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
   <span class="s2">"crossDomain"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-  <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&amp;model=806aqfniiq"</span><span class="p">,</span>
-  <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+  <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&amp;model=restaurants"</span><span class="p">,</span>
+  <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"POST"</span><span class="p">,</span>
   <span class="s2">"headers"</span><span class="p">:</span> <span class="p">{</span>
     <span class="s2">"spiderman-token"</span><span class="p">:</span> <span class="s2">"1234567890"</span>
   <span class="p">}</span>
@@ -588,28 +589,10 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <p>The above command returns JSON structured like this:</p>
 </blockquote>
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
-    </span><span class="s2">"sentences"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"sentence"</span><span class="p">:</span><span class="w"> </span><span class="s2">"I love the speed of Slack."</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"positive"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"speed"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Once you've booted it up, it seems to fly."</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"positive"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"speed"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"It doesn't matter how many rooms you're in or how many messages it has to recover."</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"neutral"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">""</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"firstName"</span><span class="p">:</span><span class="w"> </span><span class="s2">"It's a breez"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"sentiment"</span><span class="p">:</span><span class="w"> </span><span class="s2">"neutral"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"ease-of-use"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">]</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"job_id"</span><span class="p">:</span><span class="w"> </span><span class="mi">4012522</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Added this insight to the queue..."</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <blockquote>
@@ -618,10 +601,10 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"The model you are requesting doesn't exist or is unavailable"</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Please choose a valid model"</span><span class="w">
 </span><span class="p">}</span><span class="w">
 </span></code></pre><h3 id='http-request-3'>HTTP Request</h3>
-<p><code>POST https://supervisor.reviewshake.com/api/v2/insights</code></p>
+<p><code>POST https://supervisor.reviewshake.com/api/v2/insights/add</code></p>
 <h3 id='request-body-2'>Request Body</h3>
 <table><thead>
 <tr>
@@ -639,7 +622,15 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 </tr>
 </tbody></table>
 
-<p>We have general models available for several industries, such as e-commerce, airlines, hotels, cars and restaurants. Contact us to train models for your specific industry or use case.</p>
+<p>We have generic models available for several industries:</p>
+
+<ul>
+<li><code>restaurants</code></li>
+<li><code>ecommerce</code></li>
+<li><code>hotels</code></li>
+</ul>
+
+<p>We add more models on a rolling basis, but feel free to contact us to train models for your specific industry or use case.</p>
 <h3 id='response-3'>Response</h3>
 <p>The response contains the following keys:</p>
 
@@ -655,7 +646,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 </tr>
 <tr>
 <td>job_id</td>
-<td>The <code>job_id</code> assigned to the scrape</td>
+<td>The <code>job_id</code> assigned to the insight</td>
 </tr>
 <tr>
 <td>status</td>
@@ -664,6 +655,129 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <tr>
 <td>message</td>
 <td>Text response</td>
+</tr>
+</tbody></table>
+<h2 id='get-info-2'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<span class="nb">require</span> <span class="s1">'net/http'</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/info?job_id=4"</span><span class="p">)</span>
+
+<span class="n">http</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">.</span><span class="nf">host</span><span class="p">,</span> <span class="n">url</span><span class="p">.</span><span class="nf">port</span><span class="p">)</span>
+
+<span class="n">request</span> <span class="o">=</span> <span class="no">Net</span><span class="o">::</span><span class="no">HTTP</span><span class="o">::</span><span class="no">Get</span><span class="p">.</span><span class="nf">new</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="n">request</span><span class="p">[</span><span class="s2">"spiderman-token"</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'1234567890'</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">http</span><span class="p">.</span><span class="nf">request</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">response</span><span class="p">.</span><span class="nf">read_body</span>
+</code></pre><pre class="highlight python tab-python"><code><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="n">url</span> <span class="o">=</span> <span class="s">"https://supervisor.reviewshake.com/api/v2/insights/info"</span>
+
+<span class="n">querystring</span> <span class="o">=</span> <span class="p">{</span><span class="s">"job_id"</span><span class="p">:</span><span class="s">"41231241"</span><span class="p">}</span>
+
+<span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s">'spiderman-token'</span><span class="p">:</span> <span class="s">"1234567890"</span>
+    <span class="p">}</span>
+
+<span class="n">response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="s">"GET"</span><span class="p">,</span> <span class="n">url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">querystring</span><span class="p">)</span>
+
+<span class="k">print</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</code></pre><pre class="highlight shell tab-shell"><code>curl --request GET --url <span class="s1">'https://supervisor.reviewshake.com/api/v2/insights/info?job_id=41231241'</span> --header <span class="s1">'spiderman-token: 1234567890'</span>
+</code></pre><pre class="highlight javascript tab-javascript"><code><span class="kd">var</span> <span class="nx">settings</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">"async"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"crossDomain"</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
+  <span class="s2">"url"</span><span class="p">:</span> <span class="s2">"https://supervisor.reviewshake.com/api/v2/insights/info?job_id=41231241"</span><span class="p">,</span>
+  <span class="s2">"method"</span><span class="p">:</span> <span class="s2">"GET"</span><span class="p">,</span>
+  <span class="s2">"headers"</span><span class="p">:</span> <span class="p">{</span>
+    <span class="s2">"spiderman-token"</span><span class="p">:</span> <span class="s2">"1234567890"</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">(</span><span class="nx">settings</span><span class="p">).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span> <span class="p">(</span><span class="nx">response</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">response</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre>
+<blockquote>
+<p>The above command returns JSON structured like this:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"insight"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="mi">41231241</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"review_text"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Artichoke Basille's is the perfect spot to go if you're looking for some late night eats. I came here after my graduation ceremony because I was craving a decent slice and dollar pizza wasn't going to cut it! I ordered the pepperoni and margharita Sicilian. The price for a slice averages from $5-6.50. This may seem pricey but you can taste the quality, also these slices are not your average size... they're HUGE."</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"response"</span><span class="p">:</span><span class="w"> </span><span class="s2">"[{</span><span class="se">\"</span><span class="s2">sentence</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">Artichoke Basille's is the perfect spot to go if you're looking for some late night eats.</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">classification</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">food</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sentiment</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">positive</span><span class="se">\"</span><span class="s2">},{</span><span class="se">\"</span><span class="s2">sentence</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">I came here after my graduation ceremony because I was craving a decent slice and dollar pizza wasn't going to cut it!</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">classification</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">food</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sentiment</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">positive</span><span class="se">\"</span><span class="s2">},{</span><span class="se">\"</span><span class="s2">sentence</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">I ordered the pepperoni and margharita Sicilian.</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">classification</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">food</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sentiment</span><span class="se">\"</span><span class="s2">:null},{</span><span class="se">\"</span><span class="s2">sentence</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">The price for a slice averages from $5-6.50.</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">classification</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">value</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sentiment</span><span class="se">\"</span><span class="s2">:null},{</span><span class="se">\"</span><span class="s2">sentence</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">This may seem pricey but you can taste the quality, also these slices are not your average size... they're HUGE.</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">classification</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">value</span><span class="se">\"</span><span class="s2">,</span><span class="se">\"</span><span class="s2">sentiment</span><span class="se">\"</span><span class="s2">:</span><span class="se">\"</span><span class="s2">positive</span><span class="se">\"</span><span class="s2">}]"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="s2">"success"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"restaurants"</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<blockquote>
+<p>You will receive the following message if the provided <code>job_id</code> does not exist:</p>
+</blockquote>
+<pre class="highlight json tab-json"><code><span class="p">{</span><span class="w">
+    </span><span class="s2">"success"</span><span class="p">:</span><span class="w"> </span><span class="kc">false</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"This job ID doesn't exist, please create it"</span><span class="w">
+</span><span class="p">}</span><span class="w">
+</span></code></pre>
+<p>This endpoint retrieves information for a given insight <code>job_id</code>.</p>
+<h3 id='http-request-4'>HTTP Request</h3>
+<p><code>GET https://supervisor.reviewshake.xyz/api/v2/insights/info?job_id=41231241</code></p>
+<h3 id='url-parameters-2'>URL Parameters</h3>
+<table><thead>
+<tr>
+<th>Parameter</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>job_id</td>
+<td>The ID of the job to retrieve</td>
+</tr>
+</tbody></table>
+<h3 id='response-4'>Response</h3>
+<p>The response contains the following keys:</p>
+
+<table><thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>success</td>
+<td><code>true</code> or <code>false</code> depending on outcome</td>
+</tr>
+<tr>
+<td>status</td>
+<td>HTTP code for status, eg. <code>200</code></td>
+</tr>
+<tr>
+<td>insight</td>
+<td>The ID of the response from the Supervisor database (auto-increments)</td>
+</tr>
+</tbody></table>
+<h3 id='status-values-2'><code>status</code> values</h3>
+<p>The <code>status</code> returned can be one of the following:</p>
+
+<table><thead>
+<tr>
+<th><code>crawl_status</code></th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td><code>pending</code></td>
+<td>The job is still in the queue and is pending completion</td>
+</tr>
+<tr>
+<td><code>complete</code></td>
+<td>The job is complete</td>
+</tr>
+<tr>
+<td><code>maintenance</code></td>
+<td>There has been an issue with the response - our team is automatically notified for investigation</td>
 </tr>
 </tbody></table>
 <h1 id='responses'>Responses</h1><h2 id='add-review-response'>Add review response</h2>
@@ -728,7 +842,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"We do not support www.deliveroo.com yet, please submit it to our feedback forum (https://feedback.reviewshake.com)"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-4'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-5'>HTTP Request</h3>
 <p><code>POST https://supervisor.reviewshake.com/api/v2/responds/add</code></p>
 <h3 id='request-body-3'>Request Body</h3>
 <table><thead>
@@ -770,7 +884,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <aside class="info">
 Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this response.
 </aside>
-<h3 id='response-4'>Response</h3>
+<h3 id='response-5'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -785,7 +899,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 </tr>
 <tr>
 <td>job_id</td>
-<td>The <code>job_id</code> assigned to the scrape</td>
+<td>The <code>job_id</code> assigned to the response</td>
 </tr>
 <tr>
 <td>status</td>
@@ -796,7 +910,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>Text response</td>
 </tr>
 </tbody></table>
-<h2 id='get-info-2'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<h2 id='get-info-3'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/responds/info?job_id=12312313"</span><span class="p">)</span>
@@ -864,9 +978,9 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information for a given response <code>job_id</code>.</p>
-<h3 id='http-request-5'>HTTP Request</h3>
+<h3 id='http-request-6'>HTTP Request</h3>
 <p><code>GET https://supervisor.reviewshake.com/api/v2/responds/info?job_id=123123132</code></p>
-<h3 id='url-parameters-2'>URL Parameters</h3>
+<h3 id='url-parameters-3'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -878,7 +992,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>The ID of the job to retrieve</td>
 </tr>
 </tbody></table>
-<h3 id='response-5'>Response</h3>
+<h3 id='response-6'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -924,7 +1038,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>An identifier for this response in your system, will be included in callback payload</td>
 </tr>
 </tbody></table>
-<h3 id='status-values-2'><code>status</code> values</h3>
+<h3 id='status-values-3'><code>status</code> values</h3>
 <p>The <code>status</code> returned can be one of the following:</p>
 
 <table><thead>
@@ -1016,7 +1130,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">200</span><span class="p">,</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"We do not support www.deliveroo.com yet, please submit it to our feedback forum (https://feedback.reviewshake.com)"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-6'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-7'>HTTP Request</h3>
 <p><code>POST https://supervisor.reviewshake.com/api/v2/profiles/add</code></p>
 <h3 id='query-parameters'>Query Parameters</h3>
 <table><thead>
@@ -1058,7 +1172,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <aside class="info">
 Remember to take note of the <code>job_id</code>, as you will need this to GET reviews for this profile.
 </aside>
-<h3 id='response-6'>Response</h3>
+<h3 id='response-7'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -1084,7 +1198,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 <td>Text response</td>
 </tr>
 </tbody></table>
-<h2 id='get-info-3'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<h2 id='get-info-4'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/profiles/info?job_id=1234232"</span><span class="p">)</span>
@@ -1151,9 +1265,9 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information for a given review profile <code>job_id</code>.</p>
-<h3 id='http-request-7'>HTTP Request</h3>
+<h3 id='http-request-8'>HTTP Request</h3>
 <p><code>GET https://supervisor.reviewshake.com/api/v2/profiles/info?job_id=1234232</code></p>
-<h3 id='url-parameters-3'>URL Parameters</h3>
+<h3 id='url-parameters-4'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1165,7 +1279,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 <td>The ID of the job to retrieve</td>
 </tr>
 </tbody></table>
-<h3 id='response-7'>Response</h3>
+<h3 id='response-8'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -1325,9 +1439,9 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint returns the actual reviews from the scrape.</p>
-<h3 id='http-request-8'>HTTP Request</h3>
+<h3 id='http-request-9'>HTTP Request</h3>
 <p><code>GET https://supervisor.reviewshake.com/api/v2/profiles/reviews?job_id=112233</code></p>
-<h3 id='url-parameters-4'>URL Parameters</h3>
+<h3 id='url-parameters-5'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1366,7 +1480,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 <td>Show responses for reviews (optional).</td>
 </tr>
 </tbody></table>
-<h3 id='response-8'>Response</h3>
+<h3 id='response-9'>Response</h3>
 <p>The response for the <code>reviews</code> key contains the following keys (see the <code>/info</code> endpoint for the other keys):</p>
 
 <table><thead>
@@ -1501,7 +1615,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
     </span><span class="s2">"status"</span><span class="p">:</span><span class="w"> </span><span class="mi">400</span><span class="p">,</span><span class="w">
     </span><span class="s2">"message"</span><span class="p">:</span><span class="w"> </span><span class="s2">"We do not support www.deliveroo.com yet, please submit it to our feedback forum (https://feedback.reviewshake.com)"</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></code></pre><h3 id='http-request-9'>HTTP Request</h3>
+</span></code></pre><h3 id='http-request-10'>HTTP Request</h3>
 <p><code>POST https://supervisor.reviewshake.com/api/v2/url/add</code></p>
 <h3 id='request-body-4'>Request Body</h3>
 <table><thead>
@@ -1519,7 +1633,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET r
 <aside class="info">
 Remember to take note of the <code>job_id</code>, as you will need this to GET the status for this response.
 </aside>
-<h3 id='response-9'>Response</h3>
+<h3 id='response-10'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -1545,7 +1659,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>Text response</td>
 </tr>
 </tbody></table>
-<h2 id='get-info-4'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
+<h2 id='get-info-5'>Get info</h2><pre class="highlight ruby tab-ruby"><code><span class="nb">require</span> <span class="s1">'uri'</span>
 <span class="nb">require</span> <span class="s1">'net/http'</span>
 
 <span class="n">url</span> <span class="o">=</span> <span class="no">URI</span><span class="p">(</span><span class="s2">"https://supervisor.reviewshake.com/api/v2/url/info?job_id=12312313"</span><span class="p">)</span>
@@ -1619,9 +1733,9 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 </span><span class="p">}</span><span class="w">
 </span></code></pre>
 <p>This endpoint retrieves information for a given response <code>job_id</code>.</p>
-<h3 id='http-request-10'>HTTP Request</h3>
+<h3 id='http-request-11'>HTTP Request</h3>
 <p><code>GET https://supervisor.reviewshake.com/api/v2/url/info?job_id=92724</code></p>
-<h3 id='url-parameters-5'>URL Parameters</h3>
+<h3 id='url-parameters-6'>URL Parameters</h3>
 <table><thead>
 <tr>
 <th>Parameter</th>
@@ -1633,7 +1747,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>The ID of the job to retrieve</td>
 </tr>
 </tbody></table>
-<h3 id='response-10'>Response</h3>
+<h3 id='response-11'>Response</h3>
 <p>The response contains the following keys:</p>
 
 <table><thead>
@@ -1663,7 +1777,7 @@ Remember to take note of the <code>job_id</code>, as you will need this to GET t
 <td>Hash containing links to reviw sites found on the URL</td>
 </tr>
 </tbody></table>
-<h3 id='status-values-3'><code>status</code> values</h3>
+<h3 id='status-values-4'><code>status</code> values</h3>
 <p>The <code>status</code> returned can be one of the following:</p>
 
 <table><thead>
