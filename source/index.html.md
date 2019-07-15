@@ -26,8 +26,6 @@ Welcome to the Supervisor API! You can use our API to access Supervisor endpoint
 - URL Scraper API
 - Brand Audit API
 
-This API documentation is [open-source](https://github.com/reviewshake/slate) so feel free to make changes and submit a pull request if you would like.
-
 # Authentication
 
 > To authorize, you will need to use your `spiderman-token` with every request.
@@ -246,7 +244,7 @@ The `status` returned can be one of the following:
 
 # Insights
 
-## Get insights
+## Add insight
 
 Use our API to receive machine learning/natural language processing insights built for reviews.
 
@@ -254,7 +252,110 @@ Use our API to receive machine learning/natural language processing insights bui
 require 'uri'
 require 'net/http'
 
-url = URI("https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq")
+url = URI("https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&model=restaurants")
+
+http = Net::HTTP.new(url.host, url.port)
+
+request = Net::HTTP::Post.new(url)
+request["spiderman-token"] = '1234567890'
+
+response = http.request(request)
+puts response.read_body
+```
+
+```python
+import requests
+
+url = "https://supervisor.reviewshake.com/api/v2/insights/add"
+
+querystring = {"review_text":"Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.","model":"restaurants"}
+
+headers = {
+    'spiderman-token': "1234567890"
+    }
+
+response = requests.request("POST", url, headers=headers, params=querystring)
+
+print(response.text)
+```
+
+```shell
+curl --request POST --url 'https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&model=restaurants' --header 'spiderman-token: 1234567890'
+```
+
+```javascript
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://supervisor.reviewshake.com/api/v2/insights/add?review_text=Artichoke%20Basille%27s%20is%20the%20perfect%20spot%20to%20go%20if%20you%27re%20looking%20for%20some%20late%20night%20eats.%20I%20came%20here%20after%20my%20graduation%20ceremony%20because%20I%20was%20craving%20a%20decent%20slice%20and%20dollar%20pizza%20wasn%27t%20going%20to%20cut%20it%21%20I%20ordered%20the%20pepperoni%20and%20margharita%20Sicilian.%20The%20price%20for%20a%20slice%20averages%20from%20$5-6.50.%20This%20may%20seem%20pricey%20but%20you%20can%20taste%20the%20quality,%20also%20these%20slices%20are%20not%20your%20average%20size...%20they%27re%20HUGE.&model=restaurants",
+  "method": "POST",
+  "headers": {
+    "spiderman-token": "1234567890"
+  }
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "success": true,
+    "job_id": 4012522,
+    "status": 200,
+    "message": "Added this insight to the queue..."
+}
+```
+
+> If the model you are attempting to use doesn't exist or is unavailable, you will see:
+
+```json
+{
+    "success": false,
+    "status": 400,
+    "message": "Please choose a valid model"
+}
+```
+
+### HTTP Request
+
+`POST https://supervisor.reviewshake.com/api/v2/insights/add`
+
+### Request Body
+
+Key | Description
+--------- | -----------
+review_text | The review text you would like insights for
+model | The unique identifier of the model you would like to use
+
+We have generic models available for several industries:
+
+- `restaurants`
+- `ecommerce`
+- `hotels`
+
+We add more models on a rolling basis, but feel free to contact us to train models for your specific industry or use case.
+
+### Response
+The response contains the following keys:
+
+Key | Description
+--------- | -----------
+success | `true` or `false` depending on outcome
+job_id | The `job_id` assigned to the insight
+status | HTTP code for status, eg. `200`
+message | Text response
+
+## Get info
+
+```ruby
+require 'uri'
+require 'net/http'
+
+url = URI("https://supervisor.reviewshake.com/api/v2/insights/info?job_id=4")
 
 http = Net::HTTP.new(url.host, url.port)
 
@@ -268,9 +369,9 @@ puts response.read_body
 ```python
 import requests
 
-url = "https://supervisor.reviewshake.com/api/v2/insights/add"
+url = "https://supervisor.reviewshake.com/api/v2/insights/info"
 
-querystring = {"review_text":"I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.","model":"806aqfniiq"}
+querystring = {"job_id":"41231241"}
 
 headers = {
     'spiderman-token': "1234567890"
@@ -282,14 +383,14 @@ print(response.text)
 ```
 
 ```shell
-curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq' --header 'spiderman-token: 1234567890'
+curl --request GET --url 'https://supervisor.reviewshake.com/api/v2/insights/info?job_id=41231241' --header 'spiderman-token: 1234567890'
 ```
 
 ```javascript
 var settings = {
   "async": true,
   "crossDomain": true,
-  "url": "https://supervisor.reviewshake.com/api/v2/insights/add?review_text=I%20love%20the%20speed%20of%20Slack.%20Once%20you%27ve%20booted%20it%20up,%20it%20seems%20to%20fly.%20It%20doesn%27t%20matter%20how%20many%20rooms%20you%27re%20in%20or%20how%20many%20messages%20it%20has%20to%20recover.%20It%27s%20a%20breeze%20and%20a%20pleasure%20to%20go%20through%20it%20day%20to%20day.&model=806aqfniiq",
+  "url": "https://supervisor.reviewshake.com/api/v2/insights/info?job_id=41231241",
   "method": "GET",
   "headers": {
     "spiderman-token": "1234567890"
@@ -305,53 +406,36 @@ $.ajax(settings).done(function (response) {
 
 ```json
 {
-    "sentences": [
-        {
-            "sentence": "I love the speed of Slack.",
-            "sentiment": "positive",
-            "category": "speed"
-        },
-        {
-            "firstName": "Once you've booted it up, it seems to fly.",
-            "sentiment": "positive",
-            "category": "speed"
-        },
-        {
-            "firstName": "It doesn't matter how many rooms you're in or how many messages it has to recover.",
-            "sentiment": "neutral",
-            "category": ""
-        },
-        {
-            "firstName": "It's a breez",
-            "sentiment": "neutral",
-            "category": "ease-of-use"
-        }
-    ]
+    "success": true,
+    "status": "success",
+    "id": 41231241,
+    "review_text": "Artichoke Basille's is the perfect spot to go if you're looking for some late night eats. I came here after my graduation ceremony because I was craving a decent slice and dollar pizza wasn't going to cut it! I ordered the pepperoni and margharita Sicilian. The price for a slice averages from $5-6.50. This may seem pricey but you can taste the quality, also these slices are not your average size... they're HUGE.",
+    "response": "[{\"sentence\":\"Artichoke Basille's is the perfect spot to go if you're looking for some late night eats.\",\"classification\":\"food\",\"sentiment\":\"positive\"},{\"sentence\":\"I came here after my graduation ceremony because I was craving a decent slice and dollar pizza wasn't going to cut it!\",\"classification\":\"food\",\"sentiment\":\"positive\"},{\"sentence\":\"I ordered the pepperoni and margharita Sicilian.\",\"classification\":\"food\",\"sentiment\":null},{\"sentence\":\"The price for a slice averages from $5-6.50.\",\"classification\":\"value\",\"sentiment\":null},{\"sentence\":\"This may seem pricey but you can taste the quality, also these slices are not your average size... they're HUGE.\",\"classification\":\"value\",\"sentiment\":\"positive\"}]",
+    "model": "restaurants"
 }
 ```
 
-> If the model you are attempting to use doesn't exist or is unavailable, you will see:
+> You will receive the following message if the provided `job_id` does not exist:
 
 ```json
 {
     "success": false,
     "status": 400,
-    "message": "The model you are requesting doesn't exist or is unavailable"
+    "message": "This job ID doesn't exist, please create it"
 }
 ```
 
+This endpoint retrieves information for a given insight `job_id`.
+
 ### HTTP Request
 
-`POST https://supervisor.reviewshake.com/api/v2/insights`
+`GET https://supervisor.reviewshake.xyz/api/v2/insights/info?job_id=41231241`
 
-### Request Body
+### URL Parameters
 
-Key | Description
+Parameter | Description
 --------- | -----------
-review_text | The review text you would like insights for
-model | The unique identifier of the model you would like to use
-
-We have general models available for several industries, such as e-commerce, airlines, hotels, cars and restaurants. Contact us to train models for your specific industry or use case.
+job_id | The ID of the job to retrieve
 
 ### Response
 The response contains the following keys:
@@ -359,9 +443,19 @@ The response contains the following keys:
 Key | Description
 --------- | -----------
 success | `true` or `false` depending on outcome
-job_id | The `job_id` assigned to the scrape
 status | HTTP code for status, eg. `200`
-message | Text response
+id | The ID of the response from the Supervisor database (auto-increments)
+response | The classification and sentiment of each sentence in the review
+
+### `status` values
+
+The `status` returned can be one of the following:
+
+`crawl_status` | Description
+--------- | -----------
+`pending` | The job is still in the queue and is pending completion
+`complete` | The job is complete
+`maintenance` | There has been an issue with the response - our team is automatically notified for investigation
 
 # Responses
 
@@ -469,7 +563,7 @@ The response contains the following keys:
 Key | Description
 --------- | -----------
 success | `true` or `false` depending on outcome
-job_id | The `job_id` assigned to the scrape
+job_id | The `job_id` assigned to the response
 status | HTTP code for status, eg. `200`
 message | Text response
 
